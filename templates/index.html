@@ -8,24 +8,27 @@
 <body>
     <h1>Tanks Database</h1>
     <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Year</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tank in tanks %}
-            <tr>
-                <td>{{ tank.type }}</td>
-                <td>{{ tank.name }}</td>
-                <td>{{ tank.country }}</td>
-                <td>{{ tank.year }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Country</th>
+            <th>Year</th>
+        </tr>
+        {% for tank in tanks %}
+        <tr>
+            <td>{{ tank.name }}</td>
+            <td>{{ tank.type }}</td>
+            <td>{{ tank.country }}</td>
+            <td>{{ tank.year }}</td>
+        </tr>
+        {% endfor %}
     </table>
+    <form action="/add_tank" method="post">
+        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="type" placeholder="Type">
+        <input type="text" name="country" placeholder="Country">
+        <input type="text" name="year" placeholder="Year">
+        <button type="submit">Add Tank</button>
+    </form>
 </body>
 </html>
