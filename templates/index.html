@@ -13,6 +13,7 @@
             <th>Type</th>
             <th>Country</th>
             <th>Year</th>
+            <th></th> <!-- New column for delete button -->
         </tr>
         {% for tank in tanks %}
         <tr>
@@ -20,6 +21,12 @@
             <td>{{ tank.type }}</td>
             <td>{{ tank.country }}</td>
             <td>{{ tank.year }}</td>
+            <td>
+                <form action="/delete_tank" method="post">
+                    <input type="hidden" name="name" value="{{ tank.name }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>
