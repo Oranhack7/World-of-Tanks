@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Tanks</title>
+    <!-- Add your existing CSS styles here -->
+</head>
+<body>
+    <div class="container">
+        <h1>German Tanks</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Country</th>
+                <th>Year</th>
+            </tr>
+            {% for tank in tanks %}
+            <tr>
+                <td>{{ tank.name }}</td>
+                <td>{{ tank.type }}</td>
+                <td>{{ tank.country }}</td>
+                <td>{{ tank.year }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>

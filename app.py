@@ -67,6 +67,12 @@ def delete_tank():
 
     return redirect(url_for('index'))
 
+@app.route('/german_tanks')
+def german_tanks():
+    # Fetch all tanks from Germany
+    tanks = list(tanks_collection.find({"country": "Germany"}, {'_id': False}))
+    return render_template('german_tanks.html', tanks=tanks)
+
 if __name__ == '__main__':
     initialize_database()  # Initialize the database with German tank data
     app.run(debug=True)
