@@ -45,7 +45,7 @@
             margin-top: 20px;
         }
 
-        input[type="text"] {
+        input[type="text"], input[type="number"] {
             width: calc(25% - 10px);
             padding: 8px;
             margin-right: 10px;
@@ -78,9 +78,19 @@
             background-color: #d6110e;
         }
 
-        .error {
-            color: red;
-            margin-top: 10px;
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .message.success {
+            background-color: #4CAF50;
+        }
+
+        .message.error {
+            background-color: #f44336;
         }
     </style>
 </head>
@@ -88,9 +98,14 @@
     <div class="container">
         <h1>Tanks Database</h1>
         
-        {% if error %}
-        <p class="error">{{ error }}</p>
-        {% endif %}
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         
         <table>
             <tr>
