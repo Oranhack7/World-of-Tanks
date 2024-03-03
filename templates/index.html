@@ -9,19 +9,19 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('/static/tanks_background.jpg'); /* Add your background image here */
-            background-size: cover; /* Ensure it covers the full screen */
-            background-position: center; /* Center the image */
-            background-attachment: fixed; /* Fix the position */
-            background-repeat: no-repeat; /* Do not repeat the image */
-            color: #333; /* Change text color to ensure readability */
+            background-image: url('/static/tanks_background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #333;
         }
 
         .container {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -46,43 +46,101 @@
             background-color: #f2f2f2;
         }
 
-        form {
-            margin-top: 20px;
+        form.add-tank-form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        input[type="text"], input[type="number"] {
-            width: calc(25% - 10px);
-            padding: 8px;
+        /* Styles for inputs and button */
+        form.add-tank-form > input,
+        form.add-tank-form > button {
+            width: calc(25% - 16px);
+            padding: 10px;
             margin-right: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-family: Arial, sans-serif;
+            height: 20px; /* Adjusted to match the height including padding and border */
         }
 
-        button {
-            padding: 10px 20px;
+        /* Specific style for the 'Type' select dropdown */
+        form.add-tank-form > select {
+            width: calc(25% - 12px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            height: 40px; /* Ensure height matches the input fields */
+            background-color: #fff;
+        }
+
+        form.add-tank-form > button {
+            width: auto; /* Button width can be auto to accommodate text */
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Additional styles for form alignment and button visibility */
+        form.add-tank-form > input[type="text"],
+        form.add-tank-form > select,
+        form.add-tank-form > button {
+            /* Common styles for form elements */
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 38px; /* Adjusted height for uniformity */
+        }
+
+        form.add-tank-form > input[type="text"],
+        form.add-tank-form > select {
+            flex-grow: 2; /* Allows input and select to fill the space */
+            margin-right: 0; /* Removes margin between inputs/selects */
+        }
+
+        form.add-tank-form > button {
+            flex-grow: 1; /* Allows button to grow but not as much as input/select */
+        }
+
+        .add-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px; /* Adjust padding to ensure text is visible */
+            font-size: 16px; /* Increase font size for visibility */
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            height: auto; /* Adjusts height automatically to fit content */
+            width: auto; /* Adjusts width automatically to fit content */
         }
 
-        button.add-button {
-            background-color: #4CAF50;
-            color: #fff;
-        }
-
-        button.add-button:hover {
-            background-color: #45a049;
-        }
-
-        button.delete-button {
-            background-color: red;
-            color: white;
-        }
-
-        button.delete-button:hover {
+        .delete-button {
             background-color: #d6110e;
+            color: white;
+            padding: 8px 15px; /* Adjust padding to match Add Tank button */
+            font-size: 16px; /* Match font size of Add Tank button */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: auto; /* Allows height to adjust to content */
         }
 
+        /* Ensure the last element (button) has no right margin */
+        form.add-tank-form > button:last-child {
+            margin-right: 0;
+        }
+
+        /* Hover effects */
+        .add-button:hover,
+        .delete-button:hover {
+            opacity: 0.9; /* Slight opacity change on hover */
+        }
+
+        /* Message styles... */
         .message {
             padding: 10px;
             margin-bottom: 20px;
@@ -98,39 +156,18 @@
             background-color: #f44336;
         }
 
-        form.add-tank-form {
-            display: flex; /* Use flexbox to align form elements */
-            justify-content: space-between; /* Space out the form elements */
-            align-items: center; /* Align form elements vertically */
-            margin-bottom: 20px; /* Margin at the bottom of the form */
-        }
-
-        form.add-tank-form > input {
-            flex: 1; /* Allow each input to grow and fill the form */
-            margin-right: 10px; /* Add space between the form inputs */
-        }
-
-        form.add-tank-form > button {
-            flex-shrink: 0; /* Prevent the button from shrinking */
-        }
-
-        /* Remove the right margin from the last input field */
-        form.add-tank-form > input:last-child {
-            margin-right: 0;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Tanks Database</h1>
         
-        <!-- Display flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="message {{ category }}">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
         
         <table>
@@ -139,7 +176,7 @@
                 <th>Type</th>
                 <th>Country</th>
                 <th>Year</th>
-                <th></th> <!-- New column for delete button -->
+                <th></th>
             </tr>
             {% for tank in tanks %}
             <tr>
@@ -156,9 +193,15 @@
             </tr>
             {% endfor %}
         </table>
+        
         <form action="/add_tank" method="post" class="add-tank-form">
             <input type="text" name="name" placeholder="Name">
-            <input type="text" name="type" placeholder="Type">
+            <select name="type">
+                <option value="Light">Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Heavy">Heavy</option>
+                <option value="Destroyer">Destroyer</option>
+            </select>
             <input type="text" name="country" placeholder="Country">
             <input type="text" name="year" placeholder="Year">
             <button type="submit" class="add-button">Add Tank</button>
