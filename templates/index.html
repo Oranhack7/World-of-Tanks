@@ -92,6 +92,27 @@
         .message.error {
             background-color: #f44336;
         }
+
+        form.add-tank-form {
+            display: flex; /* Use flexbox to align form elements */
+            justify-content: space-between; /* Space out the form elements */
+            align-items: center; /* Align form elements vertically */
+            margin-bottom: 20px; /* Margin at the bottom of the form */
+        }
+
+        form.add-tank-form > input {
+            flex: 1; /* Allow each input to grow and fill the form */
+            margin-right: 10px; /* Add space between the form inputs */
+        }
+
+        form.add-tank-form > button {
+            flex-shrink: 0; /* Prevent the button from shrinking */
+        }
+
+        /* Remove the right margin from the last input field */
+        form.add-tank-form > input:last-child {
+            margin-right: 0;
+        }
     </style>
 </head>
 <body>
@@ -130,7 +151,7 @@
             </tr>
             {% endfor %}
         </table>
-        <form action="/add_tank" method="post">
+        <form action="/add_tank" method="post" class="add-tank-form">
             <input type="text" name="name" placeholder="Name">
             <input type="text" name="type" placeholder="Type">
             <input type="text" name="country" placeholder="Country">
