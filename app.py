@@ -3,16 +3,33 @@ from pymongo import MongoClient
 import bson
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Ensure this is a strong, secret value in production
+app.secret_key = 'your_secret_key'
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['tanksdb']
 tanks_collection = db['tanks']
 
+def initialize_database():
+    # Check if the collection is empty
+    if tanks_collection.count_documents({}) == 0:
+        # Placeholder for the actual German tank data
+        german_tanks = [
+    {"name": "Panzer I", "type": "Light Tank", "country": "Germany", "year": 1934},
+    {"name": "Panzer II", "type": "Light Tank", "country": "Germany", "year": 1936},
+    {"name": "Panzer III", "type": "Medium Tank", "country": "Germany", "year": 1937},
+    {"name": "Panzer IV", "type": "Medium Tank", "country": "Germany", "year": 1939},
+    {"name": "Panther", "type": "Medium Tank", "country": "Germany", "year": 1942},
+    {"name": "Tiger I", "type": "Heavy Tank", "country": "Germany", "year": 1942},
+    {"name": "Tiger II", "type": "Heavy Tank", "country": "Germany", "year": 1944},
+    {"name": "Leopard 1", "type": "Main Battle Tank", "country": "Germany", "year": 1965},
+    {"name": "Leopard 2", "type": "Main Battle Tank", "country": "Germany", "year": 1979},
+]
+        tanks_collection.insert_many(german_tanks)
+        print('Database initialized with German tank data.')
+
 @app.route('/')
 def index():
-    # Fetch tanks from the MongoDB collection and convert them to a list of dictionaries
     tanks = list(tanks_collection.find({}, {'_id': False}))
     return render_template('index.html', tanks=tanks)
 
@@ -42,7 +59,6 @@ def add_tank():
 def delete_tank():
     tank_name = request.form.get('name')
     
-    # Check if the tank exists before attempting to delete
     if tanks_collection.count_documents({"name": tank_name}) > 0:
         tanks_collection.delete_one({"name": tank_name})
         flash('Tank successfully deleted!', 'success')
@@ -52,4 +68,5 @@ def delete_tank():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
+    initialize_database()  # Initialize the database with German tank data
     app.run(debug=True)
