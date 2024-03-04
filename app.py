@@ -121,7 +121,7 @@ def initialize_database(): #PreBuilt DATABASE.
 
 @app.route('/')
 def index():
-    tanks = list(tanks_collection.find({}, {'_id': False}))
+    tanks = list(tanks_collection.find({}, {'_id': False}).sort("year", 1)) # Sort tanks by year in ascending order
     return render_template('index.html', tanks=tanks)
 
 @app.route('/add_tank', methods=['POST'])
@@ -156,6 +156,12 @@ def delete_tank():
     else:
         flash('Tank not found.', 'error')
 
+    return redirect(url_for('index'))
+
+@app.route('/remove_all_tanks', methods=['POST'])
+def remove_all_tanks():
+    tanks_collection.delete_many({})
+    flash('All tanks have been successfully removed!', 'success')
     return redirect(url_for('index'))
 
 @app.route('/germany_tanks')
@@ -201,5 +207,6 @@ def france_tanks():
     return render_template('france_tanks.html', tanks=tanks)
 
 if __name__ == '__main__':
-    initialize_database()  # Initialize the database with German tank data
+    initialize_database()  # Initialize the database with tanks data
     app.run(debug=True)
+
