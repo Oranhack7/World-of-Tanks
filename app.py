@@ -10,23 +10,86 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client['tanksdb']
 tanks_collection = db['tanks']
 
-def initialize_database():
+def initialize_database(): #PreBuilt DATABASE.
     # Check if the collection is empty
     if tanks_collection.count_documents({}) == 0:
-        # Placeholder for the actual German tank data
-        german_tanks = [
-    {"name": "Panzer I", "type": "Light Tank", "country": "Germany", "year": 1934},
-    {"name": "Panzer II", "type": "Light Tank", "country": "Germany", "year": 1936},
-    {"name": "Panzer III", "type": "Medium Tank", "country": "Germany", "year": 1937},
-    {"name": "Panzer IV", "type": "Medium Tank", "country": "Germany", "year": 1939},
-    {"name": "Panther", "type": "Medium Tank", "country": "Germany", "year": 1942},
-    {"name": "Tiger I", "type": "Heavy Tank", "country": "Germany", "year": 1942},
-    {"name": "Tiger II", "type": "Heavy Tank", "country": "Germany", "year": 1944},
-    {"name": "Leopard 1", "type": "Main Battle Tank", "country": "Germany", "year": 1965},
-    {"name": "Leopard 2", "type": "Main Battle Tank", "country": "Germany", "year": 1979},
-]
-        tanks_collection.insert_many(german_tanks)
+        # german tanks data
+        germany_tanks = [
+        {"name": "Panzer I", "type": "Light Tank", "country": "Germany", "year": 1934},
+        {"name": "Panzer II", "type": "Light Tank", "country": "Germany", "year": 1936},
+        {"name": "Panzer III", "type": "Medium Tank", "country": "Germany", "year": 1937},
+        {"name": "Panzer IV", "type": "Medium Tank", "country": "Germany", "year": 1939},
+        {"name": "Panther", "type": "Medium Tank", "country": "Germany", "year": 1942},
+        {"name": "Tiger I", "type": "Heavy Tank", "country": "Germany", "year": 1942},
+        {"name": "Tiger II", "type": "Heavy Tank", "country": "Germany", "year": 1944},
+        {"name": "Leopard 1", "type": "Main Battle Tank", "country": "Germany", "year": 1965},
+        {"name": "Leopard 2", "type": "Main Battle Tank", "country": "Germany", "year": 1979},
+        ]
+        tanks_collection.insert_many(germany_tanks)
         print('Database initialized with German tank data.')
+
+        # USA tanks data
+        usa_tanks = [
+        {"name": "M1917", "type": "Light Tank", "country": "USA", "year": 1917},
+        {"name": "M2 Medium Tank", "type": "Medium Tank", "country": "USA", "year": 1939},
+        {"name": "M3 Stuart", "type": "Light Tank", "country": "USA", "year": 1941},
+        {"name": "M4 Sherman", "type": "Medium Tank", "country": "USA", "year": 1942},
+        {"name": "M26 Pershing", "type": "Heavy Tank", "country": "USA", "year": 1945},
+        {"name": "M48 Patton", "type": "Main Battle Tank", "country": "USA", "year": 1952},
+        {"name": "M60 Patton", "type": "Main Battle Tank", "country": "USA", "year": 1960},
+        {"name": "M1 Abrams", "type": "Main Battle Tank", "country": "USA", "year": 1980},
+        ]
+        tanks_collection.insert_many(usa_tanks)
+        print('Database initialized with U.S. tank data.')
+
+        # UK tanks data
+        uk_tanks = [
+            {"name": "Mark I", "type": "Heavy Tank", "country": "UK", "year": 1916},
+            {"name": "Matilda II", "type": "Infantry Tank", "country": "UK", "year": 1937},
+            {"name": "Cruiser Mk IV", "type": "Cruiser Tank", "country": "UK", "year": 1939},
+            {"name": "Churchill", "type": "Infantry Tank", "country": "UK", "year": 1941},
+            {"name": "Cromwell", "type": "Cruiser Tank", "country": "UK", "year": 1943},
+            {"name": "Comet", "type": "Cruiser Tank", "country": "UK", "year": 1944},
+            {"name": "Centurion", "type": "Main Battle Tank", "country": "UK", "year": 1945},
+            {"name": "Chieftain", "type": "Main Battle Tank", "country": "UK", "year": 1966},
+            {"name": "Challenger 1", "type": "Main Battle Tank", "country": "UK", "year": 1983},
+            {"name": "Challenger 2", "type": "Main Battle Tank", "country": "UK", "year": 1998},
+        ]
+        tanks_collection.insert_many(uk_tanks)
+        print('Database initialized with UK tank data.')
+
+        # Russian tanks data
+        russia_tanks = [
+            {"name": "T-18 (MS-1)", "type": "Light Tank", "country": "Russia", "year": 1928},
+            {"name": "BT-2", "type": "Light Tank", "country": "Russia", "year": 1932},
+            {"name": "KV-1", "type": "Heavy Tank", "country": "Russia", "year": 1939},
+            {"name": "T-34", "type": "Medium Tank", "country": "Russia", "year": 1940},
+            {"name": "IS-2", "type": "Heavy Tank", "country": "Russia", "year": 1944},
+            {"name": "T-54", "type": "Main Battle Tank", "country": "Russia", "year": 1947},
+            {"name": "T-62", "type": "Main Battle Tank", "country": "Russia", "year": 1961},
+            {"name": "T-72", "type": "Main Battle Tank", "country": "Russia", "year": 1973},
+            {"name": "T-80", "type": "Main Battle Tank", "country": "Russia", "year": 1976},
+            {"name": "T-90", "type": "Main Battle Tank", "country": "Russia", "year": 1992},
+            {"name": "T-14 Armata", "type": "Main Battle Tank", "country": "Russia", "year": 2015},
+        ]
+        tanks_collection.insert_many(russia_tanks)
+        print('Database initialized with Russian tank data.')
+
+        # Chinese tanks data
+        china_tanks = [
+            {"name": "Type 58", "type": "Medium Tank", "country": "China", "year": 1958},
+            {"name": "Type 59", "type": "Main Battle Tank", "country": "China", "year": 1959},
+            {"name": "Type 62", "type": "Light Tank", "country": "China", "year": 1963},
+            {"name": "Type 63", "type": "Amphibious Light Tank", "country": "China", "year": 1963},
+            {"name": "Type 69/79", "type": "Main Battle Tank", "country": "China", "year": 1974},
+            {"name": "Type 80/88", "type": "Main Battle Tank", "country": "China", "year": 1980},
+            {"name": "Type 85/90", "type": "Main Battle Tank", "country": "China", "year": 1985},
+            {"name": "Type 96", "type": "Main Battle Tank", "country": "China", "year": 1996},
+            {"name": "Type 99", "type": "Main Battle Tank", "country": "China", "year": 2001},
+            {"name": "Type 15", "type": "Light Tank", "country": "China", "year": 2018},
+        ]
+        tanks_collection.insert_many(china_tanks)
+        print('Database initialized with Chinese tank data.')
 
 @app.route('/')
 def index():
@@ -67,11 +130,35 @@ def delete_tank():
 
     return redirect(url_for('index'))
 
-@app.route('/german_tanks')
-def german_tanks():
+@app.route('/germany_tanks')
+def germany_tanks():
     # Fetch all tanks from Germany
     tanks = list(tanks_collection.find({"country": "Germany"}, {'_id': False}))
-    return render_template('german_tanks.html', tanks=tanks)
+    return render_template('germany_tanks.html', tanks=tanks)
+
+@app.route('/usa_tanks')
+def usa_tanks():
+    # Fetch all tanks from USA
+    tanks = list(tanks_collection.find({"country": "USA"}, {'_id': False}))
+    return render_template('usa_tanks.html', tanks=tanks)
+
+@app.route('/uk_tanks')
+def uk_tanks():
+    # Fetch all tanks from UK
+    tanks = list(tanks_collection.find({"country": "UK"}, {'_id': False}))
+    return render_template('uk_tanks.html', tanks=tanks)
+
+@app.route('/russia_tanks')
+def russia_tanks():
+    # Fetch all tanks from Russia
+    tanks = list(tanks_collection.find({"country": "Russia"}, {'_id': False}))
+    return render_template('russia_tanks.html', tanks=tanks)
+
+@app.route('/china_tanks')
+def china_tanks():
+    # Fetch all tanks from China
+    tanks = list(tanks_collection.find({"country": "China"}, {'_id': False}))
+    return render_template('china_tanks.html', tanks=tanks)
 
 if __name__ == '__main__':
     initialize_database()  # Initialize the database with German tank data
