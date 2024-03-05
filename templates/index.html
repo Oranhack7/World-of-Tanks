@@ -4,31 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tanks Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/tanks_background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form.add-tank-form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for inputs and button */
+        form.add-tank-form > input,
+        form.add-tank-form > button {
+            width: calc(25% - 16px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            height: 20px; /* Adjusted to match the height including padding and border */
+        }
+
+        form.add-tank-form > button {
+            width: auto; /* Button width can be auto to accommodate text */
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Additional styles for form alignment and button visibility */
+        form.add-tank-form > input[type="text"],
+        form.add-tank-form > select,
+        form.add-tank-form > button {
+            /* Common styles for form elements */
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 38px; /* Adjusted height for uniformity */
+        }
+
+        form.add-tank-form > input[type="text"],
+        form.add-tank-form > select {
+            flex-grow: 2; /* Allows input and select to fill the space */
+            margin-right: 0; /* Removes margin between inputs/selects */
+        }
+
+        form.add-tank-form > button {
+            flex-grow: 1; /* Allows button to grow but not as much as input/select */
+        }
+
+        .add-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px; /* Adjust padding to ensure text is visible */
+            font-size: 16px; /* Increase font size for visibility */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: auto; /* Adjusts height automatically to fit content */
+            width: auto; /* Adjusts width automatically to fit content */
+        }
+
+        .delete-button {
+            background-color: #d6110e;
+            color: white;
+            padding: 8px 15px; /* Adjust padding to match Add Tank button */
+            font-size: 16px; /* Match font size of Add Tank button */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: auto; /* Allows height to adjust to content */
+        }
+
+        .remove-all-button {
+            background-color: #d6110e; /* Red background */
+            color: white;
+            padding: 8px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+
+        /* Ensure the last element (button) has no right margin */
+        form.add-tank-form > button:last-child {
+            margin-right: 0;
+        }
+
+        /* Hover effects */
+        .add-button:hover,
+        .delete-button:hover {
+            opacity: 0.9; /* Slight opacity change on hover */
+        }
+
+        /* Message styles... */
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .message.success {
+            background-color: #4CAF50;
+        }
+
+        .message.error {
+            background-color: #f44336;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Tanks Database</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Country</th>
-            <th>Year</th>
-        </tr>
-        {% for tank in tanks %}
-        <tr>
-            <td>{{ tank.name }}</td>
-            <td>{{ tank.type }}</td>
-            <td>{{ tank.country }}</td>
-            <td>{{ tank.year }}</td>
-        </tr>
+    <div class="container">
+        <h1>Tanks Database</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="message {{ category }}">{{ message }}</div>
         {% endfor %}
-    </table>
-    <form action="/add_tank" method="post">
-        <input type="text" name="name" placeholder="Name">
-        <input type="text" name="type" placeholder="Type">
-        <input type="text" name="country" placeholder="Country">
-        <input type="text" name="year" placeholder="Year">
-        <button type="submit">Add Tank</button>
-    </form>
+        {% endif %}
+        {% endwith %}
+        
+                <!-- Flags Display -->
+        <a href="/germany_tanks">
+            <img src="/static/germany_flag.jpg" alt="Germany Tanks" style="width: 100px; height: auto;">
+        </a>
+        <a href="/usa_tanks">
+            <img src="/static/usa_flag.jpg" alt="USA Tanks" style="width: 100px; height: auto;">
+        </a>
+        <a href="/uk_tanks">
+            <img src="/static/uk_flag.jpg" alt="UK Tanks" style="width: 100px; height: auto;">
+        </a>
+        <a href="/russia_tanks">
+            <img src="/static/russia_flag.jpg" alt="Russia Tanks" style="width: 100px; height: auto;">
+        </a>
+        <a href="/china_tanks">
+            <img src="/static/china_flag.jpg" alt="China Tanks" style="width: 100px; height: auto;">
+        </a>
+        <a href="/japan_tanks">
+            <img src="/static/japan_flag.jpg" alt="Japan Tanks" style="width: 100px; height: auto;">
+        </a>
+        <a href="/france_tanks">
+            <img src="/static/france_flag.jpg" alt="France Tanks" style="width: 100px; height: auto;">
+        </a>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Country</th>
+                <th>Year</th>
+                <th></th>
+            </tr>
+            {% for tank in tanks %}
+            <tr>
+                <td>{{ tank.name }}</td>
+                <td>{{ tank.type }}</td>
+                <td>{{ tank.country }}</td>
+                <td>{{ tank.year }}</td>
+                <td>
+                    <form action="/delete_tank" method="post">
+                        <input type="hidden" name="name" value="{{ tank.name }}">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>                                    
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <form action="/add_tank" method="post" class="add-tank-form">
+            <input type="text" name="name" placeholder="Name">
+            <input type="text" name="type" placeholder="Type">
+            <input type="text" name="country" placeholder="Country">
+            <input type="text" name="year" placeholder="Year">
+            <button type="submit" class="add-button">Add Tank</button>
+        </form>
+        <form action="/remove_all_tanks" method="post" style="display: inline-block;">
+            <button type="submit" class="remove-all-button">Remove All</button>
+        </form>        
+    </div>
 </body>
 </html>
