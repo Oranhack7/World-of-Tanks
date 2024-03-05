@@ -21,11 +21,11 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+       stage('Build Docker Image') {
             steps {
-                // Build Docker image
+                // Adjusted step to use Docker Pipeline syntax
                 script {
-                    docker.build(env.DOCKER_IMAGE)
+                    def customDocker = docker.build("${env.DOCKER_IMAGE}")
                 }
             }
         }
