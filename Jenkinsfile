@@ -14,7 +14,7 @@ pipeline {
                     $class: 'GitSCM', 
                     branches: [[name: 'origin/dev']],
                     userRemoteConfigs: [[
-                        url: 'https://gitlab.com/oranhack7/55413952.git',
+                        url: 'https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git',
                         credentialsId: 'oran-gitlab-creds'
                     ]]
                 ])
