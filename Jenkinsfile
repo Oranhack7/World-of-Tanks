@@ -1,10 +1,22 @@
 pipeline {
-    agent any
-
-    environment {
-        // Define Docker image tag
-        DOCKER_IMAGE = 'oranhack7/world_of_tanks_project:latest'
+    agent {
+        kubernetes {
+            label 'ez-joy-friends'
+            idleMinutes 5
+            yamlFile 'build-pod.yaml'
+            defaultContainer 'ez-docker-helm-build'
+        }
     }
+
+ environment {
+        GITLAB_CREDS = 'oran-gitlab-cred'
+        DOCKER_IMAGE = 'oranhack7/world_of_tanks_project'
+        MONGODB_URI = 'mongodb://mongo:27017/world_of_tanks'
+        PROJECT_ID = '55413952'
+        GITLAB_URL = 'https://gitlab.com'
+
+    }
+
 
     stages {
         stage('Checkout') {
@@ -53,6 +65,13 @@ pipeline {
             }
         }
     }
+
+    stage('Create Merge Request') {
+            when {
+                not {
+                    branch 'main'
+                }
+            }
 
     post {
         always {
