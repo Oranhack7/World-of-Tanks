@@ -9,8 +9,15 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checks out your repository code
-                checkout scm
+                // Explicitly check out from GitLab repository on dev branch
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: 'origin/dev']],
+                    userRemoteConfigs: [[
+                        url: 'https://gitlab.com/oranhack7/55413952.git',
+                        credentialsId: 'oran-gitlab-creds'
+                    ]]
+                ])
             }
         }
 
