@@ -8,7 +8,7 @@ pipeline {
         }
     }
 
- environment {
+    environment {
         GITLAB_CREDS = 'oran-gitlab-cred'
         DOCKER_IMAGE = 'oranhack7/world_of_tanks_project'
         MONGODB_URI = 'mongodb://mongo:27017/world_of_tanks'
