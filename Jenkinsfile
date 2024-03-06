@@ -16,12 +16,21 @@ pipeline {
         GITLAB_URL = 'https://gitlab.com'
     }
 
-    stages {
-        stage('Checkout Code') {
+       stages {
+        stage('Checkout') {
             steps {
-                checkout scm
+                // Explicitly check out from GitLab repository on dev branch
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: 'origin/dev']],
+                    userRemoteConfigs: [[
+                        url: 'https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git',
+                        credentialsId: 'oran-gitlab-creds'
+                    ]]
+                ])
             }
         }
+
 
         stage('Build Docker image') {
             steps {
