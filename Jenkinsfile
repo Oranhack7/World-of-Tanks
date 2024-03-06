@@ -72,8 +72,13 @@ pipeline {
                     branch 'main'
                 }
             }
+            steps {
+                // Steps to create a merge request
+            }
+        }
 
-    post {
+
+     post {
         always {
             // Clean up Docker images to avoid filling up the Jenkins agent
             script {
