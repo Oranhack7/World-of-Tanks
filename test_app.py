@@ -1,8 +1,8 @@
 import pytest
-from app import *
-from db import *
+from app import app as flask_app  # make sure this import matches the structure of your Flask app
 from pymongo import MongoClient
 import tempfile, os
+
 
 @pytest.fixture
 def app():
