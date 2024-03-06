@@ -14,76 +14,79 @@ pipeline {
         MONGODB_URI = 'mongodb://mongo:27017/world_of_tanks'
         PROJECT_ID = '55413952'
         GITLAB_URL = 'https://gitlab.com'
-
     }
-
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                // Explicitly check out from GitLab repository on dev branch
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: 'origin/dev']],
-                    userRemoteConfigs: [[
-                        url: 'https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git',
-                        credentialsId: 'oran-gitlab-creds'
-                    ]]
-                ])
+                checkout scm
             }
         }
 
-       stage('Build Docker Image') {
+        stage('Build Docker image') {
             steps {
-                // Adjusted step to use Docker Pipeline syntax
                 script {
-                    def customDocker = docker.build("${env.DOCKER_IMAGE}")
+                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .")
                 }
             }
         }
 
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                // Run tests using the Docker image
                 script {
-                    docker.image(env.DOCKER_IMAGE).inside {
-                        sh 'python -m unittest discover -s tests'
-                    }
+                    sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker-compose -f docker-compose.yaml run test pytest'
+                    sh 'docker-compose -f docker-compose.yaml down'
                 }
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Docker image') {
+            when {
+                branch 'main'
+            }
             steps {
                 script {
-                    // Login to Docker Hub
                     docker.withRegistry('https://registry.hub.docker.com', 'oran-docker-creds') {
-                        // Push the Docker image
-                        docker.push(env.DOCKER_IMAGE)
+                        dockerImage.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+                        dockerImage.push("latest")
                     }
                 }
             }
         }
-    }
 
-    stage('Create Merge Request') {
+        stage('Create Merge Request') {
             when {
                 not {
                     branch 'main'
                 }
             }
             steps {
-                // Steps to create a merge request
+                script {
+                    withCredentials([string(credentialsId: 'oran-gitlab-api', variable: 'GITLAB_API_TOKEN')]) {
+                        def response = sh(script: """
+                        curl -s -o response.json -w "%{http_code}" --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" -X POST "${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/merge_requests" \
+                        --form "source_branch=${env.BRANCH_NAME}" \
+                        --form "target_branch=main" \
+                        --form "title=MR from ${env.BRANCH_NAME} into main" \
+                        --form "remove_source_branch=true"
+                        """, returnStdout: true).trim()
+                        if (response.startsWith("20")) {
+                            echo "Merge request created successfully."
+                        } else {
+                            echo "Failed to create merge request. Response Code: ${response}"
+                            def jsonResponse = readJSON file: 'response.json'
+                            echo "Error message: ${jsonResponse.message}"
+                            error "Merge request creation failed."
+                        }
+                    }
+                }
             }
         }
-
-
-     post {
+    }
+    post {
         always {
-            // Clean up Docker images to avoid filling up the Jenkins agent
-            script {
-                docker.rmi(env.DOCKER_IMAGE)
-            }
+            cleanWs()
         }
     }
 }
