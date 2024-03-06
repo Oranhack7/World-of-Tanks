@@ -43,7 +43,7 @@ pipeline {
 
         stage('Push Docker image') {
             when {
-                branch 'main'
+                branch 'dev'
             }
             steps {
                 script {
