@@ -55,34 +55,6 @@ pipeline {
             }
         }
 
-        stage('Create Merge Request') {
-            when {
-                not {
-                    branch 'main'
-                }
-            }
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'oran-gitlab-api', variable: 'GITLAB_API_TOKEN')]) {
-                        def response = sh(script: """
-                        curl -s -o response.json -w "%{http_code}" --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" -X POST "${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/merge_requests" \
-                        --form "source_branch=${env.BRANCH_NAME}" \
-                        --form "target_branch=main" \
-                        --form "title=MR from ${env.BRANCH_NAME} into main" \
-                        --form "remove_source_branch=true"
-                        """, returnStdout: true).trim()
-                        if (response.startsWith("20")) {
-                            echo "Merge request created successfully."
-                        } else {
-                            echo "Failed to create merge request. Response Code: ${response}"
-                            def jsonResponse = readJSON file: 'response.json'
-                            echo "Error message: ${jsonResponse.message}"
-                            error "Merge request creation failed."
-                        }
-                    }
-                }
-            }
-        }
     }
     post {
         always {
