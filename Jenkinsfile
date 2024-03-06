@@ -40,6 +40,15 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                script {
+                    sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker-compose -f docker-compose.yaml run test pytest'
+                    sh 'docker-compose -f docker-compose.yaml down'
+                }
+            }
+        }
 
         stage('Push Docker image') {
             steps {
