@@ -1,14 +1,16 @@
-# Use an official Python runtime as a parent image
+# Use an official Python runtime as a base image
 FROM python:3.8-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . /app
+# Copy the necessary files for running pytest
+COPY test_app.py app.py db.py run_tests.sh ./
+COPY templates/ templates/
+COPY requirements.txt ./
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+# Install dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Run pytest when the container launches
-CMD ["-m pytest"]
+# Run tests when the container launches
+CMD ["python3", "-m pytest"]
