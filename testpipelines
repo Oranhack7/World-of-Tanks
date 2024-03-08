@@ -42,9 +42,6 @@ pipeline {
 
 
        stage('Push Docker image') {
-     {
-        branch 'dev'
-    }
     steps {
         script {
             docker.withRegistry('https://registry.hub.docker.com', 'oran-docker-creds') {
