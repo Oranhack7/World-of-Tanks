@@ -21,7 +21,7 @@ pipeline {
             steps {
                 // Explicitly check out from GitLab repository on dev branch
                 checkout([
-                    $class: 'GitSCM',
+                    $class: 'GitSCM', 
                     branches: [[name: 'origin/dev']],
                     userRemoteConfigs: [[
                         url: 'https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git',
