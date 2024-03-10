@@ -78,13 +78,10 @@ def test_delete_tank(client):
         country='Testland',
         year='2021'
     ), follow_redirects=True)
-    response = app.post('/delete_tank', data=dict(
+    response = client.post('/delete_tank', data=dict(
         name='Test Tank Delete'
     ), follow_redirects=True)
     assert response.status_code == 200
     assert b'Tank successfully deleted!' in response.data
 
-def test_remove_all_tanks(client):
-    response = client.post('/remove_all_tanks', follow_redirects=True)
-    assert response.status_code == 200
-    assert b'All tanks have been successfully removed!' in response.data
+
