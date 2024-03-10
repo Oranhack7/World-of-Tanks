@@ -1,5 +1,5 @@
 import pytest
-from app import app, db, bcrypt
+from app import app, db
 from pymongo import MongoClient
 import os
 
@@ -26,43 +26,43 @@ def client(mongodb):
             pass
         yield client
 
-def test_china_tanks(app):
-    response = app.get('/china_tanks')
+def test_china_tanks(client):
+    response = client.get('/china_tanks')
     assert response.status_code == 200
     assert b'China' in response.data  # Update based on your actual china_tanks.html content
 
-def test_france_tanks(app):
-    response = app.get('/france_tanks')
+def test_france_tanks(client):
+    response = client.get('/france_tanks')
     assert response.status_code == 200
     assert b'France' in response.data  # Update based on your actual france_tanks.html content
 
-def test_germany_tanks(app):
-    response = app.get('/germany_tanks')
+def test_germany_tanks(client):
+    response = client.get('/germany_tanks')
     assert response.status_code == 200
     assert b'Germany' in response.data  # Update based on your actual germany_tanks.html content
 
-def test_japan_tanks(app):
-    response = app.get('/japan_tanks')
+def test_japan_tanks(client):
+    response = client.get('/japan_tanks')
     assert response.status_code == 200
     assert b'Japan' in response.data  # Update based on your actual japan_tanks.html content
 
-def test_russia_tanks(app):
-    response = app.get('/russia_tanks')
+def test_russia_tanks(client):
+    response = client.get('/russia_tanks')
     assert response.status_code == 200
     assert b'Russia' in response.data  # Update based on your actual russia_tanks.html content
 
-def test_uk_tanks(app):
-    response = app.get('/uk_tanks')
+def test_uk_tanks(client):
+    response = client.get('/uk_tanks')
     assert response.status_code == 200
     assert b'UK' in response.data  # Update based on your actual uk_tanks.html content
 
-def test_usa_tanks(app):
-    response = app.get('/usa_tanks')
+def test_usa_tanks(client):
+    response = client.get('/usa_tanks')
     assert response.status_code == 200
     assert b'USA' in response.data  # Update based on your actual usa_tanks.html content
 
-def test_add_tank(app):
-    response = app.post('/add_tank', data=dict(
+def test_add_tank(client):
+    response = client.post('/add_tank', data=dict(
         name='Test Tank',
         type='Medium',
         country='Testland',
@@ -71,8 +71,8 @@ def test_add_tank(app):
     assert response.status_code == 200
     assert b'Tank successfully added!' in response.data
 
-def test_delete_tank(app):
-    app.post('/add_tank', data=dict(
+def test_delete_tank(client):
+    client.post('/add_tank', data=dict(
         name='Test Tank Delete',
         type='Medium',
         country='Testland',
@@ -84,7 +84,7 @@ def test_delete_tank(app):
     assert response.status_code == 200
     assert b'Tank successfully deleted!' in response.data
 
-def test_remove_all_tanks(app):
-    response = app.post('/remove_all_tanks', follow_redirects=True)
+def test_remove_all_tanks(client):
+    response = client.post('/remove_all_tanks', follow_redirects=True)
     assert response.status_code == 200
     assert b'All tanks have been successfully removed!' in response.data
