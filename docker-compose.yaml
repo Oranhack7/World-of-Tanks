@@ -6,7 +6,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/world_of_tanks_db
+      - MONGODB_URI=mongodb://mongo:27017/tanksdb
     depends_on:
       - mongo
 
@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile.test
     environment:
-      - TEST_MONGODB_URI=mongodb://mongo:27017/world_of_tanks_db
+      - TEST_MONGODB_URI=mongodb://mongo:27017/test_tanksdb
     depends_on:
       - mongo
 
