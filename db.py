@@ -1,11 +1,13 @@
 # db.py
 from flask import Flask, render_template
 from pymongo import MongoClient
+import os 
 
 app = Flask(__name__)
 
 # Connect to MongoDB
-client = MongoClient('mongodb://localhost:27017/')
+mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://mongo:27017/')
+client = MongoClient(mongodb_uri)
 db = client['tanksdb']
 tanks_collection = db['tanks']
 
@@ -17,3 +19,6 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# Close the connection to the MongoDB server
+client.close()
