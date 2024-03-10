@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from pymongo import MongoClient
 import bson
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://mongo:27017/')
 # Connect to MongoDB
-client = MongoClient('mongodb://mongo:27017/')
+client = MongoClient(mongodb_uri)
 db = client['tanksdb']
 tanks_collection = db['tanks']
 
@@ -208,5 +210,5 @@ def france_tanks():
 
 if __name__ == '__main__':
     initialize_database()  # Initialize the database with tanks data
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
