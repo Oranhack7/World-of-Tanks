@@ -91,20 +91,30 @@ pipeline {
     }
 }
 
+import pytest
+from app import app, db, bcrypt
+from pymongo import MongoClient
+import os
 
-# Use an official Python runtime as a base image
-FROM python:3.8-slim
+# Setup MongoDB test client and test database
+@pytest.fixture(scope='module')
+def mongodb():
+    test_mongodb_uri = os.getenv('TEST_MONGODB_URI', 'mongodb://mongo:27017/test_tanksdb')
+    client = MongoClient(test_mongodb_uri, serverSelectionTimeoutMS=5000)
+    test_db = client["test_tanksdb"]
+    yield test_db
+    client.drop_database("test_tanksdb")
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the necessary files for running pytest
-COPY test_app.py app.py db.py run_tests.sh ./
-COPY templates/ templates/
-COPY requirements.txt ./
-
-# Install dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Run tests when the container launches
-CMD ["python3", "-m pytest"]
+# Configure Flask test client and use the test database for the duration of the tests
+@pytest.fixture
+def client(mongodb):
+    app.config['TESTING'] = True
+    app.config['MONGODB_URI'] = 'mongodb://mongo:27017/test_tanksdb'
+    db = mongodb
+    tanks_collection = db['tanks']
+    
+    with app.test_client() as client:
+        with app.app_context():
+            # Initialize anything if needed
+            pass
+        yield client

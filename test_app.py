@@ -1,35 +1,30 @@
 import pytest
-from app import app as flask_app  # Ensures correct import from your Flask app structure
+from app import app, db, bcrypt
 from pymongo import MongoClient
 import os
 
 # Setup MongoDB test client and test database
 @pytest.fixture(scope='module')
 def mongodb():
-    # Use an environment variable or fallback to a default test URI
-    test_mongodb_uri = os.getenv('TEST_MONGODB_URI', 'mongodb://localhost:27017/test_tanksdb')
+    test_mongodb_uri = os.getenv('TEST_MONGODB_URI', 'mongodb://mongo:27017/test_tanksdb')
     client = MongoClient(test_mongodb_uri, serverSelectionTimeoutMS=5000)
     test_db = client["test_tanksdb"]
     yield test_db
-    # Clean up the test database
     client.drop_database("test_tanksdb")
 
+# Configure Flask test client and use the test database for the duration of the tests
 @pytest.fixture
-def app(mongodb):
-    flask_app.config['TESTING'] = True
-    # Point the Flask app to the test MongoDB instance
-    flask_app.config['MONGODB_URI'] = 'mongodb://localhost:27017/test_tanksdb'
-
-    # Use the MongoDB setup for the test database
+def client(mongodb):
+    app.config['TESTING'] = True
+    app.config['MONGODB_URI'] = 'mongodb://mongo:27017/test_tanksdb'
     db = mongodb
-    tanks_collection = db['tanks']  # Assuming 'tanks' is the collection used in your app
-
-    # Initialize database if necessary, e.g., with any required test data setup
-
-    with flask_app.test_client() as client:
-        with flask_app.app_context():
-            pass  # Additional app context setup if necessary
-    yield client
+    tanks_collection = db['tanks']
+    
+    with app.test_client() as client:
+        with app.app_context():
+            # Initialize anything if needed
+            pass
+        yield client
 
 def test_china_tanks(app):
     response = app.get('/china_tanks')
