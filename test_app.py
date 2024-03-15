@@ -6,7 +6,7 @@ import os
 # Setup MongoDB test client and test database
 @pytest.fixture(scope='module')
 def mongodb():
-    test_mongodb_uri = os.getenv('TEST_MONGODB_URI', 'mongodb://mongo-mongodb:27017/test_tanksdb')
+    test_mongodb_uri = os.getenv('TEST_MONGODB_URI', 'mongodb://mongo:27017/test_tanksdb')
     client = MongoClient(test_mongodb_uri, serverSelectionTimeoutMS=5000)
     test_db = client["test_tanksdb"]
     yield test_db
@@ -16,7 +16,7 @@ def mongodb():
 @pytest.fixture
 def client(mongodb):
     app.config['TESTING'] = True
-    app.config['MONGODB_URI'] = 'mongodb://mongo-mongodb:27017/test_tanksdb'
+    app.config['MONGODB_URI'] = 'mongodb://mongo:27017/test_tanksdb'
     db = mongodb
     tanks_collection = db['tanks']
     
