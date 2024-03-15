@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mongo
+  name: mongo-mongodb
   namespace: argocd
 spec:
   project: default
@@ -11,8 +11,6 @@ spec:
     targetRevision: "14.12.3"
     helm:
       parameters:
-        - name: auth.rootPassword
-          value: your-root-password
         - name: architecture
           value: "standalone"
         - name: persistence.enabled
