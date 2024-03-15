@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://mongo:27017/')
+mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://mongo-mongodb:27017/')
 # Connect to MongoDB
 client = MongoClient(mongodb_uri)
 db = client['tanksdb']
