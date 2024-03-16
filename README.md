@@ -64,7 +64,7 @@ pytest
 Navigate to the hosted URL or, if running locally, to http://localhost:5000 in your browser to explore the tank database. Click on the flag icons to filter tanks by country or use the search functionality to find specific models.
 
 ## Support
-For any recommendation, request or question feel free to email me oranhack7@gmail.com.
+For any recommendation, request or a question feel free to email me oranhack7@gmail.com.
 
 ## Monitoring
 To monitor application performance and receive alerts, refer to the Prometheus and Grafana documentation for setup and configuration instructions.
