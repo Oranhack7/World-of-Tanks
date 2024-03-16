@@ -139,7 +139,11 @@ def add_tank():
     tank_name = request.form.get('name')
     tank_type = request.form.get('type')
     raw_tank_country = request.form.get('country')
-    tank_country = format_country_name(raw_tank_country.lower())  # Format country name correctly
+    print(f"Raw country input: {raw_tank_country}")  # Debug print
+
+    tank_country = format_country_name(raw_tank_country.lower())
+    print(f"Formatted country: {tank_country}")  # Debug print
+
     tank_year_str = request.form.get('year')
     
     try:
@@ -150,12 +154,14 @@ def add_tank():
             "country": tank_country,  # Use the formatted country name
             "year": tank_year
         }
+        print(f"Tank data being inserted: {tank_data}")  # Debug print
         tanks_collection.insert_one(tank_data)
         flash('Tank successfully added!', 'success')
     except ValueError:
         flash("Year must be an integer.", 'error')
     
     return redirect(url_for('index'))
+
 
 @app.route('/delete_tank', methods=['POST'])
 def delete_tank():
