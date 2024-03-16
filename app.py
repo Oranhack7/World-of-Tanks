@@ -138,7 +138,8 @@ def index():
 def add_tank():
     tank_name = request.form.get('name')
     tank_type = request.form.get('type')
-    tank_country = request.form.get('country').lower() # Convert country to lowercase
+    raw_tank_country = request.form.get('country')
+    tank_country = format_country_name(raw_tank_country.lower())  # Format country name correctly
     tank_year_str = request.form.get('year')
     
     try:
@@ -146,7 +147,7 @@ def add_tank():
         tank_data = {
             "name": tank_name,
             "type": tank_type,
-            "country": tank_country, # Use the lowercase country
+            "country": tank_country,  # Use the formatted country name
             "year": tank_year
         }
         tanks_collection.insert_one(tank_data)
