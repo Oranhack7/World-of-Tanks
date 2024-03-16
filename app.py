@@ -33,7 +33,7 @@ def initialize_database(): #PreBuilt DATABASE.
         # USA tanks data
         usa_tanks = [
             {"name": "M1917", "type": "Light Tank", "country": "USA", "year": 1917},
-            {"name": "M2 Medium Tank", "type": "Medium Tank", "country": "USA", "year": 1939},
+            {"name": "M2", "type": "Medium Tank", "country": "USA", "year": 1939},
             {"name": "M3 Stuart", "type": "Light Tank", "country": "USA", "year": 1941},
             {"name": "M4 Sherman", "type": "Medium Tank", "country": "USA", "year": 1942},
             {"name": "M26 Pershing", "type": "Heavy Tank", "country": "USA", "year": 1945},

@@ -1,17 +1,34 @@
 # World of Tanks
 
+## Overview
+
+Welcome to the *World of Tanks* project! This application is a comprehensive database of tanks from various countries, types, and production years. It presents a user-friendly HTML website, powered by Python, that allows users to explore the vast world of armored warfare vehicles throughout history.
+
+## Features
+
+- **Comprehensive Database**: A rich collection of tanks sorted by ascending years, with detailed information on each model.
+- **Interactive Country Flags**: Users can sort tanks based on the country by clicking on flags, making it easy to find tanks from specific nations.
+- **Python-Powered Backend**: Utilizes Python for backend logic, serving a dynamic HTML front-end.
+- **CI/CD Integration**: Continuous Integration (CI) with Jenkins and Continuous Deployment (CD) with ArgoCD for streamlined development and deployment.
+- **Database**: Utilizes MongoDB for efficient data storage and retrieval.
+- **Monitoring and Alerts**: Implements Prometheus and Grafana for real-time monitoring and alerting to maintain system health and performance.
+- **Project Management**: Utilizes a Kanban board on Jira for clear and organized project tracking.
+
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+To get a local copy up and running, follow these simple steps:
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Prerequisites
 
-## Add your files
+- Python (version 3.x)
+- Flask
+- PyMongo
+- An active MongoDB instance
+- Kubernetes cluster for deployment using the Helm chart
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+### Installation
+- Clone the repo:
 ```
 cd existing_repo
 git remote add origin https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git
@@ -19,74 +36,43 @@ git branch -M main
 git push -uf origin main
 ```
 
-## Integrate with your tools
+1. Install Python dependencies:
+   ```
+   pip install flask pymongo requests pytest
+   ```
 
-- [ ] [Set up project integrations](https://gitlab.com/sela-tracks/1101/oran/world-of-tanks/-/settings/integrations)
+2. Set up your MongoDB database:
+- Follow MongoDB's documentation to install and set up your database.
+- `MONGODB_URI`: URI for connecting to your MongoDB instance.
 
-## Collaborate with your team
+3. Configure your CI/CD pipelines:
+- Jenkins and ArgoCD setup guides can be found in their respective documentation.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+4. Run the application:
+- Navigate to the application directory and run the Flask application:
+```
+python app.py
+```
 
-## Test and Deploy
+## Testing 
 
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+The application includes a suite of tests to verify the full functionality of the website, database, and its features.
+To run the tests, ensure you have `pytest` installed and execute:
+```
+pytest
+```
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Navigate to the hosted URL or, if running locally, to http://localhost:5000 in your browser to explore the tank database. Click on the flag icons to filter tanks by country or use the search functionality to find specific models.
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+For any help or question feel free to email me oranhack7@gmail.com
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Monitoring
+To monitor application performance and receive alerts, refer to the Prometheus and Grafana documentation for setup and configuration instructions.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Acknowledgments
+This project utilizes open-source tools such as Python, MongoDB, Jenkins, ArgoCD, Prometheus, and Grafana.
 
 ## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+This project is open-source and made by Oran Hackmon for the Sela College Final project of DevOps Enginnering Course.
