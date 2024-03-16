@@ -12,6 +12,14 @@ client = MongoClient(mongodb_uri)
 db = client['tanksdb']
 tanks_collection = db['tanks']
 
+def format_country_name(country):
+    if country == "uk":
+        return "UK"
+    elif country == "usa":
+        return "USA"
+    else:
+        return country.capitalize()
+
 def initialize_database(): #PreBuilt DATABASE.
     # Check if the collection is empty
     if tanks_collection.count_documents({}) == 0:
@@ -130,7 +138,7 @@ def index():
 def add_tank():
     tank_name = request.form.get('name')
     tank_type = request.form.get('type')
-    tank_country = request.form.get('country')
+    tank_country = request.form.get('country').lower() # Convert country to lowercase
     tank_year_str = request.form.get('year')
     
     try:
@@ -138,7 +146,7 @@ def add_tank():
         tank_data = {
             "name": tank_name,
             "type": tank_type,
-            "country": tank_country,
+            "country": tank_country, # Use the lowercase country
             "year": tank_year
         }
         tanks_collection.insert_one(tank_data)
@@ -168,47 +176,60 @@ def remove_all_tanks():
 
 @app.route('/germany_tanks')
 def germany_tanks():
-    # Fetch all tanks from Germany
-    tanks = list(tanks_collection.find({"country": "Germany"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "germany"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('germany_tanks.html', tanks=tanks)
 
 @app.route('/usa_tanks')
 def usa_tanks():
-    # Fetch all tanks from USA
-    tanks = list(tanks_collection.find({"country": "USA"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "usa"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('usa_tanks.html', tanks=tanks)
 
 @app.route('/uk_tanks')
 def uk_tanks():
-    # Fetch all tanks from UK
-    tanks = list(tanks_collection.find({"country": "UK"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "uk"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('uk_tanks.html', tanks=tanks)
 
 @app.route('/russia_tanks')
 def russia_tanks():
-    # Fetch all tanks from Russia
-    tanks = list(tanks_collection.find({"country": "Russia"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "russia"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('russia_tanks.html', tanks=tanks)
 
 @app.route('/china_tanks')
 def china_tanks():
-    # Fetch all tanks from China
-    tanks = list(tanks_collection.find({"country": "China"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "china"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('china_tanks.html', tanks=tanks)
 
 @app.route('/japan_tanks')
 def japan_tanks():
-    # Fetch all tanks from Japan
-    tanks = list(tanks_collection.find({"country": "Japan"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "japan"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('japan_tanks.html', tanks=tanks)
 
 @app.route('/france_tanks')
 def france_tanks():
-    # Fetch all tanks from France
-    tanks = list(tanks_collection.find({"country": "France"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "france"}, {'_id': False}))
+    # Format country names before sending to the template
+    for tank in tanks:
+        tank['country'] = format_country_name(tank['country'])
     return render_template('france_tanks.html', tanks=tanks)
 
 if __name__ == '__main__':
     initialize_database()  # Initialize the database with tanks data
     app.run(host="0.0.0.0", port=5000, debug=True)
-
