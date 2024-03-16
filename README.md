@@ -30,10 +30,8 @@ To get a local copy up and running, follow these simple steps:
 ### Installation
 - Clone the repo:
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git
-git branch -M main
-git push -uf origin main
+git close https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git
+cd world-of-tanks
 ```
 
 1. Install Python dependencies:
@@ -66,7 +64,7 @@ pytest
 Navigate to the hosted URL or, if running locally, to http://localhost:5000 in your browser to explore the tank database. Click on the flag icons to filter tanks by country or use the search functionality to find specific models.
 
 ## Support
-For any help or question feel free to email me oranhack7@gmail.com
+For any request or question feel free to email me oranhack7@gmail.com
 
 ## Monitoring
 To monitor application performance and receive alerts, refer to the Prometheus and Grafana documentation for setup and configuration instructions.
