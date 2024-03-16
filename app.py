@@ -183,7 +183,7 @@ def remove_all_tanks():
 
 @app.route('/germany_tanks')
 def germany_tanks():
-    tanks = list(tanks_collection.find({"country": "germany"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "Germany"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
