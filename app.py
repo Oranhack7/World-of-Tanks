@@ -191,7 +191,7 @@ def germany_tanks():
 
 @app.route('/usa_tanks')
 def usa_tanks():
-    tanks = list(tanks_collection.find({"country": "usa"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "USA"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
@@ -199,7 +199,7 @@ def usa_tanks():
 
 @app.route('/uk_tanks')
 def uk_tanks():
-    tanks = list(tanks_collection.find({"country": "uk"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "UK"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
@@ -207,7 +207,7 @@ def uk_tanks():
 
 @app.route('/russia_tanks')
 def russia_tanks():
-    tanks = list(tanks_collection.find({"country": "russia"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "Russia"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
@@ -215,7 +215,7 @@ def russia_tanks():
 
 @app.route('/china_tanks')
 def china_tanks():
-    tanks = list(tanks_collection.find({"country": "china"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "China"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
@@ -223,7 +223,7 @@ def china_tanks():
 
 @app.route('/japan_tanks')
 def japan_tanks():
-    tanks = list(tanks_collection.find({"country": "japan"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "Japan"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
@@ -231,7 +231,7 @@ def japan_tanks():
 
 @app.route('/france_tanks')
 def france_tanks():
-    tanks = list(tanks_collection.find({"country": "france"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "France"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
