@@ -23,7 +23,7 @@ def format_country_name(country):
 def initialize_database(): #PreBuilt DATABASE.
     # Check if the collection is empty
     if tanks_collection.count_documents({}) == 0:
-        # german tanks data
+        # German tanks data
         germany_tanks = [
             {"name": "Panzer I", "type": "Light Tank", "country": "Germany", "year": 1934},
             {"name": "Panzer II", "type": "Light Tank", "country": "Germany", "year": 1936},
