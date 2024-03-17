@@ -13,9 +13,9 @@ db = client['tanksdb']
 tanks_collection = db['tanks']
 
 def format_country_name(country):
-    if country == "uk":
+    if country.lower() == "uk":
         return "UK"
-    elif country == "usa":
+    elif country.lower() == "usa":
         return "USA"
     else:
         return country.capitalize()
@@ -191,7 +191,7 @@ def germany_tanks():
 
 @app.route('/usa_tanks')
 def usa_tanks():
-    tanks = list(tanks_collection.find({"country": "usa"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "USA"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
@@ -199,7 +199,7 @@ def usa_tanks():
 
 @app.route('/uk_tanks')
 def uk_tanks():
-    tanks = list(tanks_collection.find({"country": "uk"}, {'_id': False}))
+    tanks = list(tanks_collection.find({"country": "UK"}, {'_id': False}))
     # Format country names before sending to the template
     for tank in tanks:
         tank['country'] = format_country_name(tank['country'])
