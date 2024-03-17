@@ -34,6 +34,7 @@ pipeline {
         stage('Test With Pytest') {
             steps {
                 script {
+                    sh 'docker-compose -f docker-compose.yaml down'
                     sh 'docker-compose -f docker-compose.yaml up -d'
                     sh 'docker-compose -f docker-compose.yaml run test pytest'
                     sh 'docker-compose -f docker-compose.yaml down'
