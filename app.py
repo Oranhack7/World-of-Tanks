@@ -4,7 +4,7 @@ import bson
 import os
 #
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+#app.secret_key = 'your_secret_key'
 
 mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://mongo:27017/')
 # Connect to MongoDB
@@ -129,7 +129,7 @@ def initialize_database(): #PreBuilt DATABASE.
         tanks_collection.insert_many(france_tanks)
         print('Database initialized with the tank data of France.')
 
-@app.route('/')
+#@app.route('/')
 def index():
     tanks = list(tanks_collection.find({}, {'_id': False}).sort("year", 1)) # Sort tanks by year in ascending order
     return render_template('index.html', tanks=tanks)
