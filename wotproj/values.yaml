@@ -74,13 +74,13 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
-    port: 5000
+    port: http
   initialDelaySeconds: 15 
   periodSeconds: 10
 readinessProbe:
   httpGet:
     path: /
-    port: 5000
+    port: http
   initialDelaySeconds: 10
   periodSeconds: 5
 
