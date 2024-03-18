@@ -129,7 +129,7 @@ def initialize_database(): #PreBuilt DATABASE.
         tanks_collection.insert_many(france_tanks)
         print('Database initialized with the tank data of France.')
 
-#@app.route('/')
+@app.route('/')
 def index():
     tanks = list(tanks_collection.find({}, {'_id': False}).sort("year", 1)) # Sort tanks by year in ascending order
     return render_template('index.html', tanks=tanks)
@@ -175,7 +175,7 @@ def delete_tank():
 
     return redirect(url_for('index'))
 
-@app.route('/remove_all_tanks', methods=['POST'])
+#@app.route('/remove_all_tanks', methods=['POST'])
 def remove_all_tanks():
     tanks_collection.delete_many({})
     flash('All tanks have been successfully removed!', 'success')
