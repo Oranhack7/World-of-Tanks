@@ -35,9 +35,9 @@ cd world-of-tanks
 ```
 
 1. Install Python dependencies:
-   ```
-   pip install flask pymongo requests pytest
-   ```
+```
+pip install flask pymongo requests pytest
+```
 
 2. Set up your MongoDB database:
 - Follow MongoDB's documentation to install and set up your database.
