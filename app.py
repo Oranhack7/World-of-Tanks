@@ -175,7 +175,7 @@ def delete_tank():
 
     return redirect(url_for('index'))
 
-#@app.route('/remove_all_tanks', methods=['POST'])
+@app.route('/remove_all_tanks', methods=['POST'])
 def remove_all_tanks():
     tanks_collection.delete_many({})
     flash('All tanks have been successfully removed!', 'success')
