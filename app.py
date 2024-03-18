@@ -163,7 +163,7 @@ def add_tank():
     return redirect(url_for('index'))
 
 
-@app.route('/delete_tank', methods=['POST'])
+#@app.route('/delete_tank', methods=['POST'])
 def delete_tank():
     tank_name = request.form.get('name')
     
