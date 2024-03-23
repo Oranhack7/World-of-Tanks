@@ -26,25 +26,25 @@ To get a local copy up and running, follow these simple steps(Assuming you're us
 - Kubernetes cluster 
 
 ### Installation
-- Clone the repo:
+1. **Clone the repo**:
 ```
 git clone https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git
 cd world-of-tanks
 ```
 
-1. Install Python dependencies:
+2. **Install Python dependencies**:
 ```
 pip install flask pymongo requests pytest
 ```
 
-2. Run Docker Desktop and make sure your cluster is up and runnig.
+3. **Run Docker Desktop and make sure your cluster is up and runnig**.
 
-3. Install Helm:
+4. **Install Helm**:
 ```
 choco install kubernetes-helm
 ```
 
-4. Install Jenkins for the CI:
+5. **Install Jenkins for the CI**:
 ```
 helm repo add jenkinsci https://charts.jenkins.io/
 ```
@@ -52,14 +52,14 @@ helm repo add jenkinsci https://charts.jenkins.io/
 helm install my-jenkins jenkinsci/jenkins --version 5.1.3
 ```
 
-5. Apply these predefined yaml files which using ArgoCD for the CD:
+6. **Apply these predefined yaml files which using ArgoCD for the CD**:
 ```
 kubectl apply -f mongodb.yaml
 ```
 ```
 kubectl apply -f application.yaml
 ```
-6. Install Prometheus(under observation namespace) for monitoring and implment the predifined alerts:
+7. **Install Prometheus(under observation namespace) for monitoring and implment the predifined alerts**:
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
@@ -72,7 +72,7 @@ helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack --
 ```
 helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack -f alerts.yaml -n observation
 ```
-7. Install Grafana
+8. **Install Grafana**:
 ```
 helm repo add grafana https://grafana.github.io/helm-charts
 ```
