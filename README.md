@@ -17,39 +17,67 @@ Welcome to the *World of Tanks* project! This application is a comprehensive dat
 
 ## Getting started
 
-To get a local copy up and running, follow these simple steps:
+To get a local copy up and running, follow these simple steps(Assuming you're using Windows OS):
 
 ### Prerequisites
 
-- Python (version 3.x)
-- Flask
-- PyMongo
-- An active MongoDB instance
-- Kubernetes cluster for deployment using the Helm chart
+- Python (version 3.X)
+- Docker Desktop
+- Kubernetes cluster 
 
 ### Installation
-- Clone the repo:
+1. **Clone the repo**:
 ```
-git close https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git
+git clone https://gitlab.com/sela-tracks/1101/oran/world-of-tanks.git
 cd world-of-tanks
 ```
 
-1. Install Python dependencies:
+2. **Install Python dependencies**:
 ```
 pip install flask pymongo requests pytest
 ```
 
-2. Set up your MongoDB database:
-- Follow MongoDB's documentation to install and set up your database.
-- `MONGODB_URI`: URI for connecting to your MongoDB instance.
+3. **Run Docker Desktop and make sure your cluster is up and runnig**.
 
-3. Configure your CI/CD pipelines:
-- Jenkins and ArgoCD setup guides can be found in their respective documentation.
-
-4. Run the application:
-- Navigate to the application directory and run the Flask application:
+4. **Install Helm**:
 ```
-python app.py
+choco install kubernetes-helm
+```
+
+5. **Install Jenkins for the CI**:
+```
+helm repo add jenkinsci https://charts.jenkins.io/
+```
+```
+helm install my-jenkins jenkinsci/jenkins --version 5.1.3
+```
+
+6. **Apply these predefined yaml files which using ArgoCD for the CD**:
+```
+kubectl apply -f mongodb.yaml
+```
+```
+kubectl apply -f application.yaml
+```
+7. **Install Prometheus(under observation namespace) for monitoring and implment the predifined alerts**:
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+```
+```
+helm repo update
+```
+```
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack --version v0.72.0 -n observation
+```
+```
+helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack -f alerts.yaml -n observation
+```
+8. **Install Grafana**:
+```
+helm repo add grafana https://grafana.github.io/helm-charts
+```
+```
+helm install my-grafana grafana/grafana --version 7.3.7
 ```
 
 ## Testing 
