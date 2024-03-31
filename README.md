@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the *World of Tanks* project! This application is a comprehensive database of tanks from various countries, types, and production years. It presents a user-friendly HTML website, powered by Python, that allows users to explore the vast world of armored warfare vehicles throughout history.
+Welcome to the *World of Tanks* project! This application is a comprehensive database of tanks from various countries, types, and production years. It presents a user-friendly website, powered by Python, that allows users to explore the vast world of armored warfare vehicles throughout history.
 
 ## Features
 
